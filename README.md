@@ -10,7 +10,8 @@ Can you create a mental image of the chess board by just only reading chess nota
 ## Built With
 
 - IDE: Visual Code Studio
-- Languages: Python
+- Language(s): Python
+- Package(s): stockfish 3.14.0
 
 ## Authors
 - Alex Badia
