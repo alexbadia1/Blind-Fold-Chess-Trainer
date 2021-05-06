@@ -1,2 +1,16 @@
 # Blind-Fold-Chess-Trainer
-A simple program to help learn and better understanding chess notation. The goal is to be able to create a mental image of the chess board by reading chess notation!
+Can you create a mental image of the chess board by just only reading chess notation?!
+
+## Getting Started
+
+### Prerequisites
+
+### Installation
+
+## Built With
+
+- IDE: Visual Code Studio
+- Languages: Python
+
+## Authors
+- Alex Badia
