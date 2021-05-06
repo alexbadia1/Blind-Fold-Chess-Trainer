@@ -1,9 +1,11 @@
 import re
 
+
 class FenPositon:
     def __init__(self):
         self.fen = ["8", "8", "8", "8", "8", "8", "8", "8"]
-    
+        self.hasTarget = False
+
     def setRank(self, rankNum, fenCode):
         length = 0
 
@@ -19,7 +21,7 @@ class FenPositon:
             # Invalid character, don't modify fen at specified rank
             else:
                 return False
-            
+
         # Any combination of numbers and character's length must equal 8
         if(length == 8):
 
@@ -29,29 +31,14 @@ class FenPositon:
     def setFileInRankToPiece(self, rankNum, fileLetter, piece):
         if isinstance(rankNum, int) and isinstance(piece, str) and isinstance(piece, str):
 
-            if len(fileLetter) == 1 and len(piece) == 1:
+            if len(fileLetter) == 1 and len(piece) == 1 and rankNum > 0 and rankNum < 9:
 
                 # Make sure for valid piece and valid file
                 if re.search(r"r|n|b|q|k|p", piece) == None or re.search(r"[a-h]", fileLetter) == None:
                     return False
-                
-                '''
-                The current format of the FEN rank is for example: 
-                    k1p5
 
-                To make insertion easier we'll expanding the format to:
-                    k1p11111
-                '''
-                tempFenRank = ""
-                for file in self.fen[rankNum]:
-
-                    if re.search(r"r|n|b|q|k|p", file) != None:
-                        tempFenRank += file
-
-                    if re.search(r"[1-8]", file) != None:
-                        for i in range(int(file)):
-                            tempFenRank += "1"
-                
+                expandedFenRank = self.expandFenRank(
+                    collapsedFenRank=self.fen[rankNum - 1])
                 '''
                 Now we can just insert a piece by directly accesing the index,
                 this is easy after mapping the [a-g] to indexes [0-7]
@@ -59,15 +46,15 @@ class FenPositon:
                 Luckily I can use ascii values for this and offset by lower case "a"s ascii value (97)
                 '''
                 array = []
-                array[:0] = tempFenRank
+                array[:0] = expandedFenRank
                 array[ord(fileLetter.lower()) - 97] = piece
 
                 '''
-                Now, don't forget to collapse the tempFenRankString again!
+                Now, don't forget to collapse the expandedFenRank again!
 
                 Just iterate through the temp string and replace consecutive 1's with the count instead.
                 '''
-                self.fen[rankNum] = ""
+                self.fen[rankNum - 1] = ""
                 count = 0
                 for letter in array:
                     if(letter == "1"):
@@ -75,20 +62,40 @@ class FenPositon:
                     else:
                         # Add compressed number if there were zeros to compress
                         if count > 0:
-                            self.fen[rankNum] += str(count)
-                        
+                            self.fen[rankNum - 1] += str(count)
+
                         # Add the letter
-                        self.fen[rankNum] += letter
+                        self.fen[rankNum - 1] += letter
                         count = 0
-                
+
                 # Just encase the string ended with numbers
-                self.fen[rankNum] += str(count)
-                
-    def setFenPosition(self, stockfish):
-        print("/".join(self.fen))
-        stockfish.set_fen_position("/".join(self.fen))
+                self.fen[rankNum - 1] += str(count)
 
-       
+    def expandFenRank(self, collapsedFenRank):
+        '''
+        The current format of the FEN rank is for example: 
+            k1p5
 
-            
+        To make insertion easier we'll expanding the format to:
+            k1p11111
+        '''
+        expandedFenRank = ""
+        for file in collapsedFenRank:
 
+            if re.search(r"r|n|b|q|k|p", file) != None:
+                expandedFenRank += file
+
+            if re.search(r"[1-8]", file) != None:
+                for i in range(int(file)):
+                    expandedFenRank += "1"
+
+        return expandedFenRank
+
+    # def setFenPosition(self, stockfish):
+    #     print("/".join(self.fen))
+    #     stockfish.set_fen_position("/".join(self.fen))
+
+    def toString(self):
+        for rank in self.fen[::-1]:
+            print(self.expandFenRank(rank).replace("1", " - ").replace("k", " k ").replace("n",
+                  " n ").replace("r", " r ").replace("b", " b ").replace("q", " q ").replace("p", " p "))
