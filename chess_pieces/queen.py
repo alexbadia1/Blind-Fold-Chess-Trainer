@@ -4,7 +4,7 @@ from chess_pieces.rook import Rook
 
 class Queen(Bishop, Rook, Piece):
     def __init__(self, file: str, rank: int, fen):
-        Piece.__init__(self, newFile=file, newRank=rank, newFen=fen, newSymbol="q")
+        Piece.__init__(self, newFile=file, newRank=rank, newFen=fen, newSymbol="Q")
         self.calc_valid_laterals()
         self.calc_valid_diagonals()
     
