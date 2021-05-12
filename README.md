@@ -17,7 +17,7 @@ The opening command line menu is:
 
 The goal of learning is to provide excersises that will help beginners build there skills in creating a mental image of the board.
 Specifically, excersises such as:
-  - Empty board valid move questions (Implemented only for the queen)
+  - Empty board valid move questions (currently, only implemented for the queen)
   - Capture the flag, via chess notation (Not yet implemented)
   - Shortest path to a certain sqaure, given a piece and its legal moves (Not yet implemented)
   - etc.
