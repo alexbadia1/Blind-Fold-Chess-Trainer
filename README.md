@@ -24,6 +24,8 @@ Specifically, excersises such as:
 
 ### Play
 
+Not yet Implemented
+
 Play a match against stockfish by only typing in chess notation and receiving chess notation.
 The user may peek the board, if they get lost, or see a list of the moves written in chess notation.
 
@@ -32,6 +34,7 @@ The user may peek the board, if they get lost, or see a list of the moves writte
 Not yet implmented
 
 - Try to guess openings and their variations by only looking at chess notation, keeping in mind that many openings transpose into each other.
+    - Example: What is the name of this dubious opening: e4 e5, Nf3 Nc6, Bc4 Bc5, b4?! ...
 - Write chess notation for a given opening, X moves deep.
 
 ### Blindfold Puzzles
